@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useState } from 'react';
+import axios from 'axios';
 function App() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const addUser = async () => {
+    try {
+      await axios.post('http://localhost:5000/api/users', { name, email });
+      setMessage('User registered successfully!');
+      setName('');
+      setEmail('');
+      setTimeout(() => setMessage(''), 4000); // Clear message after 3 seconds
+    } catch (error) {
+      console.error('Error adding user:', error);
+      setMessage('Error registering user.');
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px',
+      width: '250px',
+      margin: '0 auto',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100vh',
+      textAlign: 'center'
+    }}>
+      <h1>User Management</h1>
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        style={{ width: '100%', padding: '8px' }}
+      />
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        style={{ width: '100%', padding: '8px' }}
+      />
+      <button onClick={addUser} style={{ padding: '8px', cursor: 'pointer' }}>Add User</button>
+      {message && <p style={{ color: 'green', fontWeight: 'bold' }}>{message}</p>}
     </div>
   );
 }
-
 export default App;
