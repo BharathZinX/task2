@@ -9,7 +9,7 @@ const port = 5000;
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.json());
 
-// SQL Server Configuration (Windows Authentication)
+// SQL Server Configuration (SQL Server Authentication)
 const config = {
     user: 'testuser', //  Replace with your SQL Server username
     password: 'Admindev@123', //  Replace with your password
